@@ -165,15 +165,6 @@ app.get('/assignment', (req, res) => {
 });
 
 
-// app.get('/dashboardSummary', (req, res) => {
-//   const sql = "SELECT * FROM support_schedule";
-//   db.query(sql, (err, results) => {
-//     if (err) {
-//       return res.status(500).json({ error: err.message });
-//     }
-//     res.json(results);
-//   });
-// });
 
 app.get('/support_schedule', (req, res) => {
   const sql = "SELECT * FROM support_schedule";
@@ -192,6 +183,23 @@ app.post('/support_schedule', (req, res) => {
     res.status(400).send({ error: 'Username cannot be null' });
     return;
   }
+
+  app.get('/joined_data', (req, res) => {
+    const sql = `
+      SELECT users.*, support_schedule.* 
+      FROM users 
+      JOIN support_schedule ON users.id = support_schedule.user_id
+    `;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(results);
+    });
+  });
+
+  
 
   const query = 'INSERT INTO support_schedule SET ?';
   db.query(query, shiftData, (err, result) => {

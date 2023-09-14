@@ -25,4 +25,8 @@ export class DataService {
         const response = await axios.post(`${this.baseUrl}/support_schedule`, shiftData);
         return response.data;
       }
+
+      async getJoinedData(): Promise<any[]> {
+        return axios.get(`${this.baseUrl}/joined_data`).then(response => response.data);
+    }
   }
