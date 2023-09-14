@@ -1,18 +1,18 @@
-const { async } = require("rxjs");
-const db = require("../config/database");
-const jwt = require("jsonwebtoken");
+const db = require("../models/index");
 
+const jwt = require("jsonwebtoken");
+const  JWT_SECRET  = process.env.JWT_SECRET;
 exports.auth = (req, res, next) => {
   try {
-    const token = req.headers["authtoken"];
-
+    const token = req.header('authtoken') //|| req.query.token || req.cookies.token;
     if (!token) {
       return res.status(401).send("no token , authorization denied");
     }
-    const decoded = jwt.verify(token, "jwtSecret");
+    const decoded = jwt.verify(token,JWT_SECRET);
 
     console.log("middleware", decoded);
     req.user = decoded.user;
+    console.log("55555555555555555555555+",req.user)
     next();
   } catch (err) {
     console.log(err);
@@ -20,32 +20,29 @@ exports.auth = (req, res, next) => {
   }
 };
 
-exports.adminCheck =  (req, res, next) => {
+exports.adminCheck = async (req, res, next) => {
   try {
-    const { username } = req.user
-    db.query(
-      "SELECT * FROM users WHERE username = ?",
-      [username],
-      async (error, results) => {
-        if (error) {
-          console.log(error);
-          return res.status(500).send({ err: "Error" });
-        }
+    // Get the token from the request cookies
+    const token = req.cookies.token;
 
-        if (results.length === 0) {
-          return res.status(403).send("Admin access denine");
-        } else {
-          const userRole = results[0].role;
-          if (userRole !== 'admin') {
-            return res.status(403).send("USER");
-          } else {
-            await next()
-          }
-        }
-      }
-    );
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ err: "Error" });
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    // Verify and decode the JWT token
+    const decoded = jwt.verify(token, JWT_SECRET); // Replace with your JWT secret key
+
+    // Check if the user with the decoded username has the 'admin' role in the database
+    const user = await db.User.findOne({ where: { username: decoded.user.username } });
+
+    if (!user || user.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden: Access denied for non-admin users' });
+    }
+
+    // If the user is an admin, proceed to the next middleware or route
+    next();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
