@@ -31,6 +31,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { ShiftService } from './component/service/shift.service';
 import { DashboardService } from './component/service/dashboard.service';
 import { DataService } from './component/service/data.service';
+import { MenubarComponent } from './component/page/menubar/menubar.component';
+import { MainComponent } from './component/page/main/main.component';
+import { ProfileDetailComponent } from './component/page/profile-detail/profile-detail.component';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { DataService } from './component/service/data.service';
     LoginComponent,
     RegisterComponent,
     SupportShiftComponent,
+    MenubarComponent,
+    MainComponent,
+    ProfileDetailComponent,
   ],
   imports: [
     BrowserModule,
