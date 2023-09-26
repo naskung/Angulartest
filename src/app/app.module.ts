@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChecklistTableComponent } from './component/page/checklist-table/checklist-table.component';
@@ -15,24 +14,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
-import { ShiftService } from './component/service/shift.service';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
-import { DashboardService } from './component/service/dashboard.service';
-import { DataService } from './component/service/data.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table';
-import {  DatePipe } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import {AuthService} from './component/service/auth.service';
-import { RegisterComponent } from './component/page/register/register.component'
-
-
-
+import { DatePipe } from '@angular/common';
+import { AuthService } from './component/service/auth.service';
+import { RegisterComponent } from './component/page/register/register.component';
+import { SupportShiftComponent } from './component/page/grid-support/support-shift/support-shift.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { ShiftService } from './component/service/shift.service';
+import { DashboardService } from './component/service/dashboard.service';
+import { DataService } from './component/service/data.service';
 
 
 @NgModule({
@@ -41,7 +39,7 @@ import { RegisterComponent } from './component/page/register/register.component'
     ChecklistTableComponent,
     LoginComponent,
     RegisterComponent,
-
+    SupportShiftComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,8 +55,6 @@ import { RegisterComponent } from './component/page/register/register.component'
     MatNativeDateModule,
     MatIconModule,
     MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     FormsModule,
     MatListModule,
     HttpClientModule,
@@ -67,14 +63,14 @@ import { RegisterComponent } from './component/page/register/register.component'
     MatAutocompleteModule,
     MatTableModule,
     ReactiveFormsModule,
-    ],
+    FullCalendarModule,
+  ],
   providers: [
     ShiftService,
     DashboardService,
     DataService,
     DatePipe,
     AuthService
-    
   ],
   bootstrap: [AppComponent]
 })
