@@ -48,6 +48,10 @@ label {
   margin-top: 10px;
 }
 
+::ng-deep .modal-backdrop.show {
+  display: none !important;
+}
+
 
 .event-popup {
   position: fixed;
@@ -61,3 +65,4 @@ label {
   z-index: 1000;
   border-radius: 10px;
 }
+

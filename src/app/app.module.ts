@@ -36,6 +36,8 @@ import { MainComponent } from './component/page/main/main.component';
 import { ProfileDetailComponent } from './component/page/profile-detail/profile-detail.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,7 @@ import { ProfileDetailComponent } from './component/page/profile-detail/profile-
     LoginComponent,
     RegisterComponent,
     SupportShiftComponent,
-    MenubarComponent,
+        MenubarComponent,
     MainComponent,
     ProfileDetailComponent,
   ],
